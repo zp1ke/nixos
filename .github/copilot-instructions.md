@@ -29,7 +29,6 @@ This repository contains a complete NixOS configuration setup using both NixOS s
 
 - **`dotfiles/`** - User dotfiles and configuration files
   - `p10k.zsh` - Powerlevel10k zsh theme configuration
-  - `ssh-add.desktop` - Desktop entry for SSH key management
 
 - **`scripts/`** - Utility scripts
   - `make.sh` - Build and deployment script with `update` and `clean` commands
