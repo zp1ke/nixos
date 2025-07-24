@@ -6,6 +6,7 @@ fi
 
 case "$1" in
   update)
+    sudo cp -f ./config.nix /etc/nixos/config.nix
     sudo nixos-rebuild switch
     home-manager switch --flake .#zp1ke
     ;;

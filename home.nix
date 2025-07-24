@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   p10kFile = ./dotfiles/p10k.zsh;
@@ -13,7 +13,31 @@ in
       zsh-powerlevel10k
       zsh-syntax-highlighting
       nerd-fonts.meslo-lg
+      openssh
+      kdePackages.ksshaskpass
+      kdePackages.kwalletmanager
+      keychain
     ];
+
+    sessionVariables = {
+      SSH_ASKPASS = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+      SSH_ASKPASS_REQUIRE = "prefer";
+    };
+
+    file.".ssh/config" = {
+      text = ''
+        Host *
+          AddKeysToAgent yes
+          identityFile ~/.ssh/id_ed25519
+          User git
+        
+        Host github.com
+          HostName github.com
+      '';
+      onChange = ''
+        chmod 600 ~/.ssh/config
+      '';
+    };
 
     username = "zp1ke";
     homeDirectory = "/home/zp1ke";
@@ -26,6 +50,25 @@ in
     lfs.enable = true;
     userName = "Matt Atcher";
     userEmail = "zp1ke@proton.me";
+    extraConfig = {
+      init.defaultBranch = "main";
+      push.autoSetupRemote = true;
+      url."git@github.com".insteadOf = "https://github.com";
+    };
+  };
+
+  programs.ssh = {
+    enable = true;
+    forwardAgent = true;
+    addKeysToAgent = "yes";
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519";
+        identitiesOnly = true;
+      };
+    };
   };
 
   programs.vscode = {
@@ -49,6 +92,7 @@ in
       source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
       source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+      eval $(keychain --eval --agents ssh id_ed25519)
     '';
 
     shellAliases = {
@@ -56,7 +100,16 @@ in
     };
   };
 
+  programs.keychain = {
+    enable = true;
+    keys = [ "id_ed25519" ];
+    agents = [ "ssh" ];
+    inheritType = "any";
+  };
+
   fonts = {
     fontconfig.enable = true;
   };
+
+  services.ssh-agent.enable = true;
 }
