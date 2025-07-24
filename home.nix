@@ -8,6 +8,7 @@ in
 
   home = {
     packages = with pkgs; [
+      dbeaver-bin
       github-desktop
       kdePackages.ksshaskpass
       kdePackages.kwalletmanager
