@@ -53,7 +53,6 @@ in
     extraConfig = {
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
-      url."git@github.com".insteadOf = "https://github.com";
     };
   };
 
