@@ -40,7 +40,7 @@ in
       '';
     };
 
-    file."/etc/open-fortivpn/config" = {
+    file.".config/openfortivpn.conf" = {
       text = ''
         host = HOST
         port = PORT
@@ -107,6 +107,7 @@ in
 
     shellAliases = {
       ll = "ls -lah";
+      fortivpn = "sudo openfortivpn -c ~/.config/openfortivpn.conf";
     };
   };
 
