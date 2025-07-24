@@ -8,15 +8,16 @@ in
 
   home = {
     packages = with pkgs; [
+      kdePackages.ksshaskpass
+      kdePackages.kwalletmanager
+      keychain
+      nerd-fonts.meslo-lg
+      openfortivpn
+      openssh
       zsh
       zsh-autosuggestions
       zsh-powerlevel10k
       zsh-syntax-highlighting
-      nerd-fonts.meslo-lg
-      openssh
-      kdePackages.ksshaskpass
-      kdePackages.kwalletmanager
-      keychain
     ];
 
     sessionVariables = {
@@ -30,12 +31,22 @@ in
           AddKeysToAgent yes
           identityFile ~/.ssh/id_ed25519
           User git
-        
+
         Host github.com
           HostName github.com
       '';
       onChange = ''
         chmod 600 ~/.ssh/config
+      '';
+    };
+
+    file."/etc/open-fortivpn/config" = {
+      text = ''
+        host = HOST
+        port = PORT
+        username = USERNAME
+        password = PASSWORD
+        trusted-cert = TRUSTED_CERT
       '';
     };
 
