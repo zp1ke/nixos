@@ -23,7 +23,7 @@
   programs.firefox = {
     enable = true;
     preferences = {
-      "widget.use-xdg-desktop-portal.file-picker" = 1; 
+      "widget.use-xdg-desktop-portal.file-picker" = 1;
     };
   };
 
@@ -32,9 +32,6 @@
     enableSSHSupport = true;
     pinentryPackage = pkgs.pinentry-qt;
   };
-
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
 
   security.pam.services.sddm.enableKwallet = true;
   security.pam.services.kde.enableKwallet = true;
