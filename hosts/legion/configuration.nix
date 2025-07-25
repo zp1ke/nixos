@@ -12,12 +12,24 @@
   nixpkgs.config.allowUnfree = true;
 
   # Bootloader
-  boot.loader = {
-    grub = {
-      enable = true;
-      device = "/dev/vda"; # Adjust this to your actual disk
-      useOSProber = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
+    kernelParams = [
+      "quiet"
+      "splash"
+      "rd.systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "udev.log_priority=3"
+    ];
+  };
+
+  # Enable hardware acceleration
+  hardware = {
+    graphics.enable = true;
+    pulseaudio.enable = false;
   };
 
   # Networking
