@@ -7,9 +7,6 @@
     packages = with pkgs; [
       dbeaver-bin
       github-desktop
-      jdk8
-      jdk17
-      jdk21
       kdePackages.ksshaskpass
       kdePackages.kwalletmanager
       keychain
