@@ -100,6 +100,8 @@ This guide provides step-by-step instructions for installing NixOS using the min
 3. **Copy the generated hardware configuration:**
    ```sh
    sudo cp /mnt/etc/nixos/hardware-configuration.nix /mnt/nixos-config/hosts/legion/
+   # Stage the file so flake can see it
+   git add hosts/legion/hardware-configuration.nix
    ```
 
 4. **Review and adjust the hardware configuration if needed:**

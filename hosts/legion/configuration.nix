@@ -9,14 +9,16 @@
     ../../modules/base.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   # Bootloader
   boot.loader = {
     grub = {
       enable = true;
-      device = "/dev/vda"; # Adjust if necessary
+      device = "nodev";
+      efiSupport = true;
       useOSProber = true;
     };
-    systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
 

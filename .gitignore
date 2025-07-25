@@ -1,5 +1,7 @@
 # Hardware configuration (generated)
 hardware-configuration.nix
+# But allow host-specific ones
+!hosts/*/hardware-configuration.nix
 
 # Secrets
 secrets/

@@ -59,7 +59,7 @@
       grep = "rg";
     };
 
-    initExtra = ''
+    initContent = ''
       setopt HIST_IGNORE_DUPS
       setopt SHARE_HISTORY
       setopt HIST_EXPIRE_DUPS_FIRST
@@ -85,14 +85,6 @@
     };
   };
 
-  programs.firefox = {
-    enable = true;
-    settings = {
-      "browser.startup.page" = 0;
-      "privacy.trackingprotection.enabled" = true;
-    };
-  };
-
-  # Enable home-manager
+  programs.firefox.enable = true;
   programs.home-manager.enable = true;
 }
