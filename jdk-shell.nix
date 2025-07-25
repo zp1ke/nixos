@@ -8,7 +8,7 @@ pkgs.mkShell {
 
   shellHook = ''
     export JAVA_HOME="${pkgs.jdk21}/lib/openjdk"
-    echo "Using JDK 21..."
+    echo "JDK 21 environment loaded."
     java -version
   '';
 }

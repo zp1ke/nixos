@@ -116,6 +116,9 @@ in
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+    stdlib = ''
+      : ''${DIRENV_LOG_FORMAT:=}
+    '';
   };
 
   programs.keychain = {
