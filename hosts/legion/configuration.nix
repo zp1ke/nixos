@@ -15,14 +15,8 @@
   boot.loader = {
     grub = {
       enable = true;
-      efiSupport = true;
-      efiInstallAsRemovable = true;
-      device = "nodev";
+      device = "/dev/vda"; # Adjust this to your actual disk
       useOSProber = true;
-    };
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
     };
   };
 
