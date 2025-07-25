@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  p10kFile = ./dotfiles/p10k.zsh;
-in
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -10,6 +7,9 @@ in
     packages = with pkgs; [
       dbeaver-bin
       github-desktop
+      jdk8
+      jdk17
+      jdk21
       kdePackages.ksshaskpass
       kdePackages.kwalletmanager
       keychain
@@ -100,7 +100,7 @@ in
 
     initContent = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      source ${p10kFile}
+      source ./dotfiles/p10k.zsh
       source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
       source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
@@ -111,6 +111,11 @@ in
       ll = "ls -lah";
       fortivpn = "sudo openfortivpn -c ~/.config/openfortivpn.conf";
     };
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 
   programs.keychain = {
