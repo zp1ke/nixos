@@ -128,20 +128,6 @@ Before installation, you may want to customize some settings:
 3. **Review boot loader settings:**
    ```sh
    sudo nano hosts/legion/configuration.nix
-   # Check boot.loader section - adjust device if needed
-   # The current config has "/dev/vda" which should be changed to your actual disk
-   ```
-
-   **Important:** Update the GRUB device in `configuration.nix`:
-   ```nix
-   boot.loader = {
-     grub = {
-       enable = true;
-       device = "/dev/sda"; # Change this to your actual disk
-       useOSProber = true;
-     };
-     # ... rest of config
-   };
    ```
 
 ## Step 7: Install NixOS

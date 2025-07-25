@@ -15,11 +15,15 @@
   boot.loader = {
     grub = {
       enable = true;
-      device = "nodev";
       efiSupport = true;
+      efiInstallAsRemovable = true;
+      device = "nodev";
       useOSProber = true;
     };
-    efi.canTouchEfiVariables = true;
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
   };
 
   # Networking
