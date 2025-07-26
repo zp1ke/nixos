@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 set -e  # Exit on any error
 
 echo "🔐 Generating SSH key for Git repositories..."
@@ -41,21 +42,44 @@ echo "🔒 Setting proper permissions..."
 chmod 600 ~/.ssh/id_ed25519
 chmod 644 ~/.ssh/id_ed25519.pub
 
-# Check if SSH agent is running
-if ! pgrep -x ssh-agent > /dev/null; then
+# Better SSH agent handling
+echo "🔍 Checking SSH agent..."
+
+# Function to start SSH agent
+start_ssh_agent() {
   echo "🚀 Starting SSH agent..."
   eval "$(ssh-agent -s)"
-  if [ $? -ne 0 ]; then
-    echo "❌ ERROR: Failed to start SSH agent"
-    exit 1
+
+  # Save agent info for future sessions
+  echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > ~/.ssh/agent-info
+  echo "export SSH_AGENT_PID=$SSH_AGENT_PID" >> ~/.ssh/agent-info
+}
+
+# Function to load existing agent
+load_ssh_agent() {
+  if [ -f ~/.ssh/agent-info ]; then
+    source ~/.ssh/agent-info > /dev/null
   fi
+}
+
+# Try to load existing agent first
+load_ssh_agent
+
+# Check if agent is accessible
+if ! ssh-add -l &>/dev/null; then
+  echo "SSH agent not accessible, starting new one..."
+  start_ssh_agent
+else
+  echo "✅ SSH agent is already running"
 fi
 
 # Add key to SSH agent
 echo "➕ Adding key to SSH agent..."
-if ! ssh-add ~/.ssh/id_ed25519; then
-  echo "❌ ERROR: Failed to add key to SSH agent"
-  exit 1
+if ssh-add ~/.ssh/id_ed25519; then
+  echo "✅ Key successfully added to SSH agent"
+else
+  echo "⚠️  Could not add key to SSH agent automatically"
+  echo "💡 You can add it manually later with: ssh-add ~/.ssh/id_ed25519"
 fi
 
 echo ""
@@ -69,4 +93,8 @@ echo "📝 Next steps:"
 echo "1. Copy the public key above"
 echo "2. Add it to GitHub: https://github.com/settings/ssh/new"
 echo "3. Add it to GitLab: https://gitlab.com/-/profile/keys"
-echo "4. Test connections again with: ~/.ssh/test_connections.sh"
+echo "4. Test connections with: test-ssh-connections"
+echo ""
+echo "🔧 If SSH agent issues persist, run these commands:"
+echo "   eval \"\$(ssh-agent -s)\""
+echo "   ssh-add ~/.ssh/id_ed25519"
