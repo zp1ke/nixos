@@ -26,6 +26,15 @@
           sha256 = "1lzrn0n4fxfcgg65v0qhnj7wnybybqzs4adz7xsrkgmcsr0ii8b7";
         };
       }
+      {
+        name = "zsh-history-substring-search";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-history-substring-search";
+          rev = "v1.0.2";
+          sha256 = "0y8va5kc2ram38hbk2cibkk64ffrabfv92xqjjdqqwl6n30g5lf4";
+        };
+      }
     ];
 
     shellAliases = {
@@ -43,14 +52,26 @@
       setopt HIST_FIND_NO_DUPS
       setopt HIST_REDUCE_BLANKS
 
+      # Autosuggestion key bindings (Right arrow or End to accept)
+      bindkey '^[[C' forward-char                    # Right arrow - accept one character
+      bindkey '^[[1;5C' forward-word                 # Ctrl+Right arrow - accept one word
+      bindkey '^E' end-of-line                       # Ctrl+E - accept entire suggestion
+
+      # History substring search (only when you start typing)
+      bindkey '^[[A' history-substring-search-up     # Up arrow
+      bindkey '^[[B' history-substring-search-down   # Down arrow
+
       # Better history search
       bindkey '^R' history-incremental-search-backward
-      bindkey '^[[A' history-substring-search-up
-      bindkey '^[[B' history-substring-search-down
 
       # Better navigation
       setopt AUTO_PUSHD
       setopt PUSHD_IGNORE_DUPS
+
+      # Configure autosuggestion behavior
+      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,underline"
+      ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+      ZSH_AUTOSUGGEST_USE_ASYNC=true
     '';
   };
 

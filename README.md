@@ -20,13 +20,25 @@ Personal NixOS configuration using flakes and Home Manager.
 ## Structure
 
 ```
-├── flake.nix              # Main flake configuration
+├── flake.nix                        # Main flake configuration
+├── docs/
+│   ├── setup.md                     # Installation guide
+│   └── setup-git.md                 # Git & SSH setup guide
 ├── hosts/
-│   └── legion/            # Host-specific configuration
+│   └── legion/
+│       └── configuration.nix        # Host-specific system config
 ├── home-manager/
-│   └── zp1ke.nix         # User configuration
-└── modules/
-    └── base.nix          # Shared modules
+│   └── zp1ke.nix                    # User configuration
+├── modules/
+│   ├── base.nix                     # Shared system modules
+│   ├── git.nix                      # Git configuration
+│   ├── ssh.nix                      # SSH configuration
+│   ├── terminal.nix                 # Terminal & Zsh setup
+│   └── scripts/
+│       ├── generate_ssh_key.sh      # SSH key generation script
+│       └── test_ssh_connections.sh  # SSH connection test
+├── overlays/                        # Nix package overlays
+└── secrets/                         # Secrets (gitignored)
 ```
 
 ## License
