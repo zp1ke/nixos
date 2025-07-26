@@ -28,12 +28,8 @@
       }
       {
         name = "zsh-history-substring-search";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-history-substring-search";
-          rev = "v1.0.2";
-          sha256 = "0y8va5kc2ram38hbk2cibkk64ffrabfv92xqjjdqqwl6n30g5lf4";
-        };
+        src = pkgs.zsh-history-substring-search;
+        file = "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
       }
     ];
 
