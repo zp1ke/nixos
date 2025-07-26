@@ -20,7 +20,7 @@
 
     aliases = {
       # SSH key verification
-      verify-ssh = "!ssh -T git@github.com && ssh -T git@gitlab.com";
+      verify-ssh = "!echo 'Testing GitHub...' && ssh -T git@github.com 2>&1 | head -1 && echo 'Testing GitLab...' && ssh -T git@gitlab.com 2>&1 | head -1";
     };
   };
 }
