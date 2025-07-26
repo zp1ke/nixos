@@ -27,9 +27,10 @@
     userName = "Matt Atcher";
     userEmail = "zp1ke@proton.me";
     extraConfig = {
+      core.editor = "code --wait";
       init.defaultBranch = "main";
-      pull.rebase = true;
       merge.conflictstyle = "zdiff3";
+      pull.rebase = true;
     };
   };
 
@@ -73,6 +74,7 @@
     enable = true;
     enableZshIntegration = true;
     settings = {
+      add_newline = true;
       format = "$all$character";
       character = {
         success_symbol = "[➜](bold green)";

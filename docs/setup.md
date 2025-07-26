@@ -175,11 +175,33 @@ Before installation, you may want to customize some settings:
    home-manager --version
    ```
 
-## Step 9: Post-Installation
+## Step 9: Locate Configuration
+
+1. **Find your configuration:**
+   ```sh
+   ls -la /nixos-config
+   ```
+
+2. **Move to standard location:**
+   ```sh
+   sudo mv /nixos-config/** /etc/nixos
+   sudo mv /nixos-config/.git* /etc/nixos
+   cd /etc/nixos
+   # If owned by root, change to your user
+   sudo chown -R zp1ke:users /etc/nixos
+   ```
+
+3. **Set up for future updates:**
+   ```sh
+   # Make updates with
+   sudo nixos-rebuild switch --flake .#legion
+   ```
+
+## Step 10: Post-Installation
 
 1. **Update the system:**
    ```sh
-   sudo nixos-rebuild switch --flake /etc/nixos#legion
+   sudo nixos-rebuild switch --flake .#legion
    ```
 
 2. **Update flake inputs (optional):**
