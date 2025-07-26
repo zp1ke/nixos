@@ -27,10 +27,7 @@
   };
 
   # Enable hardware acceleration
-  hardware = {
-    graphics.enable = true;
-    pulseaudio.enable = false;
-  };
+  hardware.graphics.enable = true;
 
   # Networking
   networking = {
