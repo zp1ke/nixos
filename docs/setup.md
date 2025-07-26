@@ -165,14 +165,15 @@ Before installation, you may want to customize some settings:
 
 3. **Verify the installation:**
    ```sh
-   # Check system info
-   neofetch  # or any system info command
-
    # Verify flakes are working
    nix --version
 
    # Check Home Manager
    home-manager --version
+
+   # Test zsh aliases (enhanced CLI tools)
+   ll        # Enhanced ls with eza
+   cat       # Enhanced cat with bat (syntax highlighting)
    ```
 
 ## Step 9: Locate Configuration
@@ -193,7 +194,10 @@ Before installation, you may want to customize some settings:
 
 3. **Set up for future updates:**
    ```sh
-   # Make updates with
+   # Make updates with convenient alias
+   nixos-update    # Updates system configuration
+
+   # Or manually:
    sudo nixos-rebuild switch --flake .#legion
    ```
 
@@ -201,6 +205,9 @@ Before installation, you may want to customize some settings:
 
 1. **Update the system:**
    ```sh
+   nixos-update    # Convenient alias for system updates
+
+   # Or manually:
    sudo nixos-rebuild switch --flake .#legion
    ```
 
@@ -208,7 +215,7 @@ Before installation, you may want to customize some settings:
    ```sh
    cd /etc/nixos
    sudo nix flake update
-   sudo nixos-rebuild switch --flake .#legion
+   nixos-update    # Apply updates with alias
    ```
 
 ## Configuration Overview
@@ -225,8 +232,12 @@ This NixOS configuration includes:
 
 ### User Environment (Home Manager)
 - **Applications**: Firefox, VS Code, development tools
-- **Shell**: Zsh with plugins and custom aliases
-- **Git**: Pre-configured with user details
+- **Shell**: Zsh with plugins and enhanced aliases:
+  - `ll` - Enhanced directory listing with eza
+  - `cat` - Syntax-highlighted file viewing with bat
+  - `grep` - Faster searching with ripgrep
+  - `..` and `...` - Quick directory navigation
+- **Terminal**: Enhanced with Starship prompt and history search
 - **Utilities**: bat, eza, ripgrep for enhanced CLI experience
 
 ### File Structure
@@ -276,11 +287,27 @@ To modify your system after installation:
 
 1. **Edit configuration files in `/etc/nixos/`**
 2. **Test changes:** `sudo nixos-rebuild test --flake .#legion`
-3. **Apply permanently:** `sudo nixos-rebuild switch --flake .#legion`
+3. **Apply permanently:** `nixos-update` or `sudo nixos-rebuild switch --flake .#legion`
 
 For Home Manager changes:
 1. **Edit the user config**
 2. **Apply changes:** `home-manager switch --flake .#zp1ke`
+
+### Enhanced Terminal Experience
+
+After installation, you'll have access to enhanced terminal tools:
+
+- **Directory navigation:**
+  - `ll` - Beautiful file listing with icons and colors
+
+- **File viewing and searching:**
+  - `cat filename` - Syntax-highlighted file viewing
+  - `grep pattern` - Fast searching with ripgrep
+  - Use `Ctrl+R` for history search
+  - Use arrow keys for smart history navigation
+
+- **System management:**
+  - `nixos-update` - Quick system updates
 
 ---
 
