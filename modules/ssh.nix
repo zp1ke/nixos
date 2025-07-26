@@ -9,7 +9,6 @@
     extraConfig = ''
       # Default settings
       AddKeysToAgent yes
-      UseKeychain yes
       IdentitiesOnly yes
 
       # Prevent timeout
