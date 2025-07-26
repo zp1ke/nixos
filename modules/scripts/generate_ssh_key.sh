@@ -1,4 +1,3 @@
-#!/bin/bash
 set -e  # Exit on any error
 
 echo "🔐 Generating SSH key for Git repositories..."

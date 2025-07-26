@@ -1,5 +1,3 @@
-#!/bin/bash
-
 echo "🧪 Testing SSH connections..."
 
 echo "Testing GitHub..."

@@ -38,15 +38,12 @@
   # SSH agent service
   services.ssh-agent.enable = true;
 
-  # SSH key generation script
-  home.file.".ssh/generate_key.sh" = {
-    source = ./scripts/generate_ssh_key.sh;
-    executable = true;
-  };
+  # SSH utilities using external script files
+  home.packages = [
+    # SSH key generation script
+    (pkgs.writeShellScriptBin "generate-ssh-key" (builtins.readFile ./scripts/generate_ssh_key.sh))
 
-  # SSH connection test script
-  home.file.".ssh/test_connections.sh" = {
-    source = ./scripts/test_ssh_connections.sh;
-    executable = true;
-  };
+    # SSH connection test script
+    (pkgs.writeShellScriptBin "test-ssh-connections" (builtins.readFile ./scripts/test_ssh_connections.sh))
+  ];
 }
