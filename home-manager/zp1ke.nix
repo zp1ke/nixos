@@ -4,6 +4,8 @@
 {
   imports = [
     ../modules/terminal.nix
+    ../modules/ssh.nix
+    ../modules/git.nix
   ];
 
   home.username = "zp1ke";
@@ -12,25 +14,11 @@
 
   home.packages = with pkgs; [
     # Development
-    git
     vscode
 
     # Internet
     firefox
   ];
-
-  # Git configuration
-  programs.git = {
-    enable = true;
-    userName = "Matt Atcher";
-    userEmail = "zp1ke@proton.me";
-    extraConfig = {
-      core.editor = "code --wait";
-      init.defaultBranch = "main";
-      merge.conflictstyle = "zdiff3";
-      pull.rebase = true;
-    };
-  };
 
   programs.firefox.enable = true;
   programs.home-manager.enable = true;
