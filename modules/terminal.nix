@@ -32,6 +32,7 @@
       ll = "eza -la";
       cat = "bat";
       grep = "rg";
+      nixos-update = "sudo nixos-rebuild switch --flake /etc/nixos/#legion";
     };
 
     initContent = ''
