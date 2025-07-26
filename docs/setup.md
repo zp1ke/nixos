@@ -168,12 +168,25 @@ Before installation, you may want to customize some settings:
    # Verify flakes are working
    nix --version
 
-   # Check Home Manager
-   home-manager --version
+   # Check if Home Manager is available
+   which home-manager
+   # If not found, it's normal - Home Manager is integrated via flake
 
    # Test zsh aliases (enhanced CLI tools)
    ll        # Enhanced ls with eza
    cat       # Enhanced cat with bat (syntax highlighting)
+
+   # Test zsh features
+   echo "Testing terminal features..."
+   ls | grep test  # Should use ripgrep instead of grep
+   ```
+4. **If Home Manager command is needed:**
+   ```sh
+   # Add Home Manager to your user environment temporarily
+   nix profile install nixpkgs#home-manager
+
+   # Or use the flake-based approach (recommended)
+   home-manager switch --flake /etc/nixos#zp1ke
    ```
 
 ## Step 9: Locate Configuration
@@ -211,7 +224,16 @@ Before installation, you may want to customize some settings:
    sudo nixos-rebuild switch --flake .#legion
    ```
 
-2. **Update flake inputs (optional):**
+2. **Update Home Manager (if you need the command):**
+   ```sh
+   # Install Home Manager command if needed
+   nix profile install nixpkgs#home-manager
+
+   # Apply Home Manager changes
+   home-manager switch --flake /etc/nixos#zp1ke
+   ```
+
+3. **Update flake inputs (optional):**
    ```sh
    cd /etc/nixos
    sudo nix flake update
@@ -243,15 +265,26 @@ This NixOS configuration includes:
 ### File Structure
 ```
 /
-├── flake.nix              # Main flake configuration
+├── flake.nix                          # Main flake configuration
+├── docs/
+│   ├── setup.md                       # Installation guide
+│   └── setup-git.md                   # Git & SSH setup guide
 ├── hosts/
 │   └── legion/
-│       ├── configuration.nix      # Host-specific system config
-│       └── hardware-configuration.nix  # Hardware-specific config
+│       ├── configuration.nix          # Host-specific system config
+│       └── hardware-configuration.nix # Hardware-specific config
 ├── home-manager/
-│   └── zp1ke.nix         # User-specific Home Manager config
-└── modules/
-    └── base.nix          # Shared system modules
+│   └── zp1ke.nix                      # User-specific Home Manager config
+├── modules/
+│   ├── base.nix                       # Shared system modules
+│   ├── git.nix                        # Git configuration
+│   ├── ssh.nix                        # SSH configuration
+│   ├── terminal.nix                   # Terminal & Zsh setup
+│   └── scripts/
+│       ├── generate_ssh_key.sh        # SSH key generation script
+│       └── test_ssh_connections.sh    # SSH connection test
+├── overlays/                          # Nix package overlays
+└── secrets/                           # Secrets (gitignored)
 ```
 
 ## Troubleshooting
@@ -274,6 +307,12 @@ This NixOS configuration includes:
    - Make sure the user is in the correct groups (wheel, networkmanager)
    - Check: `groups zp1ke`
 
+5. **Home Manager command not found:**
+   - This is normal with flake-based configurations
+   - Home Manager is integrated into the system rebuild
+   - Use `nixos-update` for both system and user changes
+   - If you need the command: `nix profile install nixpkgs#home-manager`
+
 ### Getting Help
 
 - **NixOS Manual**: https://nixos.org/manual/nixos/stable/
@@ -289,9 +328,21 @@ To modify your system after installation:
 2. **Test changes:** `sudo nixos-rebuild test --flake .#legion`
 3. **Apply permanently:** `nixos-update` or `sudo nixos-rebuild switch --flake .#legion`
 
-For Home Manager changes:
-1. **Edit the user config**
-2. **Apply changes:** `home-manager switch --flake .#zp1ke`
+**For Home Manager changes:**
+
+Since Home Manager is integrated into the flake, most changes are applied with the system rebuild:
+
+1. **Edit the user config in `/etc/nixos/home-manager/zp1ke.nix`**
+2. **Apply changes:** `nixos-update` (rebuilds both system and Home Manager)
+
+**If you need the standalone Home Manager command:**
+```sh
+# Install it once
+nix profile install nixpkgs#home-manager
+
+# Then use it for user-only changes
+home-manager switch --flake /etc/nixos#zp1ke
+```
 
 ### Enhanced Terminal Experience
 
