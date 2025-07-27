@@ -4,6 +4,12 @@
   home.packages = with pkgs; [
     openfortivpn
     networkmanager-fortisslvpn  # NetworkManager plugin for FortiSSL VPN
+
+    # VPN connection scripts
+    (writeShellScriptBin "vpn-connect" (builtins.readFile ./scripts/vpn_connect.sh))
+    (writeShellScriptBin "vpn-disconnect" (builtins.readFile ./scripts/vpn_disconnect.sh))
+    (writeShellScriptBin "vpn-status" (builtins.readFile ./scripts/vpn_status.sh))
+    (writeShellScriptBin "vpn-setup" (builtins.readFile ./scripts/vpn_setup.sh))
   ];
 
   # VPN configuration files
@@ -28,19 +34,4 @@
       # ca-file = /path/to/ca.crt
     '';
   };
-
-  # VPN connection scripts using external script files
-  home.packages = [
-    # VPN connection script
-    (pkgs.writeShellScriptBin "vpn-connect" (builtins.readFile ./scripts/vpn_connect.sh))
-
-    # VPN disconnection script
-    (pkgs.writeShellScriptBin "vpn-disconnect" (builtins.readFile ./scripts/vpn_disconnect.sh))
-
-    # VPN status script
-    (pkgs.writeShellScriptBin "vpn-status" (builtins.readFile ./scripts/vpn_status.sh))
-
-    # VPN setup script
-    (pkgs.writeShellScriptBin "vpn-setup" (builtins.readFile ./scripts/vpn_setup.sh))
-  ];
 }
