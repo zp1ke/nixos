@@ -6,6 +6,7 @@
     ../modules/terminal.nix
     ../modules/ssh.nix
     ../modules/git.nix
+    ../modules/network.nix
   ];
 
   home.username = "zp1ke";
