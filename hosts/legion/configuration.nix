@@ -67,6 +67,9 @@
     };
   };
 
+  # Enable Docker
+  virtualisation.docker.enable = true;
+
   # Users
   users.users.zp1ke = {
     isNormalUser = true;

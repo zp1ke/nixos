@@ -8,6 +8,7 @@
     ../modules/git.nix
     ../modules/network.nix
     ../modules/cloud.nix
+    ../modules/development.nix
   ];
 
   home.username = "zp1ke";
