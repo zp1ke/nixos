@@ -68,6 +68,9 @@
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,underline"
       ZSH_AUTOSUGGEST_STRATEGY=(history completion)
       ZSH_AUTOSUGGEST_USE_ASYNC=true
+
+      # Hook direnv into zsh
+      eval "$(direnv hook zsh)"
     '';
   };
 

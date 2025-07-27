@@ -8,7 +8,8 @@ Personal NixOS configuration using flakes and Home Manager.
 - **Home Manager integration** for user environment management
 - **KDE Plasma 6** desktop environment
 - **Zsh** with Starship prompt and useful plugins
-- **Development tools** including VS Code, Git, and CLI utilities
+- **Development tools** including VS Code, Git, Docker, and CLI utilities
+- **Per-project environments** with direnv for managing JDK versions
 - **SSH key management** with convenient scripts
 - **Enhanced terminal** with aliases and modern CLI tools (eza, bat, ripgrep)
 - **VPN support** with OpenFortiVPN integration
@@ -20,6 +21,7 @@ Personal NixOS configuration using flakes and Home Manager.
 2. **Git & SSH Setup**: After installation, configure Git and SSH keys with [setup-git.md](docs/setup-git.md)
 3. **Network & VPN**: Configure VPN connections with [setup-network.md](docs/setup-network.md)
 4. **Cloud Storage**: Set up OneDrive sync with [setup-cloud.md](docs/setup-cloud.md)
+5. **Development Environment**: Set up development environments with [setup-development.md](docs/setup-development.md)
 
 ## Structure
 
@@ -27,6 +29,7 @@ Personal NixOS configuration using flakes and Home Manager.
 ├── flake.nix                          # Main flake configuration
 ├── docs/
 │   ├── setup.md                       # Installation guide
+│   ├── setup-development.md           # Development environment setup guide
 │   ├── setup-git.md                   # Git & SSH setup guide
 │   ├── setup-network.md               # Network & VPN setup guide
 │   └── setup-cloud.md                 # Cloud storage setup guide
@@ -37,6 +40,7 @@ Personal NixOS configuration using flakes and Home Manager.
 │   └── zp1ke.nix                      # User configuration
 ├── modules/
 │   ├── base.nix                       # Shared system modules
+│   ├── development.nix                # Development tools and environment
 │   ├── git.nix                        # Git configuration
 │   ├── ssh.nix                        # SSH configuration
 │   ├── terminal.nix                   # Terminal & Zsh setup
