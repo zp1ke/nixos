@@ -4,6 +4,16 @@
   home.packages = with pkgs; [
     onedrive
     rclone       # Alternative cloud sync tool
+
+    # OneDrive management scripts
+    (writeShellScriptBin "onedrive-setup" (builtins.readFile ./scripts/onedrive_setup.sh))
+    (writeShellScriptBin "onedrive-sync" (builtins.readFile ./scripts/onedrive_sync.sh))
+    (writeShellScriptBin "onedrive-monitor" (builtins.readFile ./scripts/onedrive_monitor.sh))
+    (writeShellScriptBin "onedrive-status" (builtins.readFile ./scripts/onedrive_status.sh))
+    (writeShellScriptBin "onedrive-start" (builtins.readFile ./scripts/onedrive_start.sh))
+    (writeShellScriptBin "onedrive-stop" (builtins.readFile ./scripts/onedrive_stop.sh))
+    (writeShellScriptBin "onedrive-logs" (builtins.readFile ./scripts/onedrive_logs.sh))
+    (writeShellScriptBin "onedrive-reset" (builtins.readFile ./scripts/onedrive_reset.sh))
   ];
 
   # OneDrive service configuration
@@ -67,31 +77,4 @@
       webhook_enabled = false
     '';
   };
-
-  # OneDrive management scripts using external script files
-  home.packages = [
-    # OneDrive setup script
-    (pkgs.writeShellScriptBin "onedrive-setup" (builtins.readFile ./scripts/onedrive_setup.sh))
-
-    # OneDrive sync script
-    (pkgs.writeShellScriptBin "onedrive-sync" (builtins.readFile ./scripts/onedrive_sync.sh))
-
-    # OneDrive monitor script
-    (pkgs.writeShellScriptBin "onedrive-monitor" (builtins.readFile ./scripts/onedrive_monitor.sh))
-
-    # OneDrive status script
-    (pkgs.writeShellScriptBin "onedrive-status" (builtins.readFile ./scripts/onedrive_status.sh))
-
-    # OneDrive start service script
-    (pkgs.writeShellScriptBin "onedrive-start" (builtins.readFile ./scripts/onedrive_start.sh))
-
-    # OneDrive stop service script
-    (pkgs.writeShellScriptBin "onedrive-stop" (builtins.readFile ./scripts/onedrive_stop.sh))
-
-    # OneDrive logs script
-    (pkgs.writeShellScriptBin "onedrive-logs" (builtins.readFile ./scripts/onedrive_logs.sh))
-
-    # OneDrive reset script
-    (pkgs.writeShellScriptBin "onedrive-reset" (builtins.readFile ./scripts/onedrive_reset.sh))
-  ];
 }
