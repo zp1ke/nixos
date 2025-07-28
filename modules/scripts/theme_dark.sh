@@ -2,4 +2,3 @@
 
 # Apply KDE Plasma dark theme
 ${PLASMA_WORKSPACE}/bin/plasma-apply-colorscheme BreezeDark
-${PLASMA_DESKTOP}/bin/lookandfeeltool -a org.kde.breezedark.desktop
