@@ -207,11 +207,11 @@ Before installation, you may want to customize some settings:
 
 3. **Set up for future updates:**
    ```sh
-   # Make updates with convenient alias
-   nixos-update    # Updates system configuration
+   # Apply updates with alias
+   nixos-update
 
-   # Or manually:
-   sudo nixos-rebuild switch --flake .#legion
+   # Clean up old system generations to save space
+   nixos-clean
    ```
 
 ## Step 10: Post-Installation
@@ -219,12 +219,15 @@ Before installation, you may want to customize some settings:
 1. **Update the system:**
    ```sh
    nixos-update    # Convenient alias for system updates
-
-   # Or manually:
-   sudo nixos-rebuild switch --flake .#legion
    ```
 
-2. **Update Home Manager (if you need the command):**
+2. **Clean up old generations (optional):**
+   After a successful update, you can run `nixos-clean` to remove old system versions and free up disk space.
+   ```sh
+   nixos-clean
+   ```
+
+3. **Update Home Manager (if you need the command):**
    ```sh
    # Install Home Manager command if needed
    nix profile install nixpkgs#home-manager

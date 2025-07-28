@@ -37,7 +37,8 @@
       ll = "eza -la";
       cat = "bat";
       grep = "rg";
-      nixos-update = "sudo nixos-rebuild switch --flake /etc/nixos/#legion";
+      nixos-clean = "sudo nix-collect-garbage -d";
+      nixos-update = "sudo nixos-rebuild switch --flake /etc/nixos/#legion --upgrade";
     };
 
     initContent = ''
