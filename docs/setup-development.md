@@ -2,77 +2,37 @@
 
 This document outlines how to set up per-project development environments, specifically for managing Java Development Kit (JDK) versions using `direnv` and Nix flakes.
 
-## Per-Project JDK Configuration with `direnv`
+## Per-Project JDK Configuration using `setup-jdk-env`
 
-Our NixOS configuration comes with `direnv` and `nix-direnv` pre-installed and configured. This allows you to define specific environments for your projects that are automatically loaded when you `cd` into the project directory.
+Our NixOS configuration includes a convenient script, `setup-jdk-env`, to quickly bootstrap a per-project Java development environment. This script automatically generates the necessary `flake.nix` and `.envrc` files for you.
 
 Follow these steps to configure a specific JDK for a project:
 
-### 1. Create a `.envrc` file
+### 1. Run the `setup-jdk-env` Script
 
-In the root of your Java project, create a file named `.envrc` with the following content:
+Navigate to the root directory of your Java project in the terminal and run the `setup-jdk-env` script, passing the desired JDK version number as an argument.
+
+For example, to set up an environment with JDK 21, run:
 
 ```sh
-use flake
+setup-jdk-env 21
 ```
 
-This command tells `direnv` to use the Nix flake in the current directory to build the development environment.
+The script will create two files in your project directory:
+- `flake.nix`: Configured to use the specified JDK version (e.g., `pkgs.jdk21`).
+- `.envrc`: Instructs `direnv` to use the `flake.nix` file.
 
-### 2. Create a `flake.nix` file
+### 2. Allow `direnv`
 
-In the same directory, create a `flake.nix` file. This file defines the project's dependencies, including the JDK.
-
-Here is a template for a simple Java project using JDK 21:
-
-```nix
-{
-  description = "A simple Java development environment";
-
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
-
-  outputs = { self, nixpkgs }:
-    let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
-    {
-      devShells.${system}.default = pkgs.mkShell {
-        buildInputs = [
-          # Specify the JDK version you need
-          pkgs.jdk21
-
-          # You can add other tools like Maven or Gradle here
-          # pkgs.maven
-          # pkgs.gradle
-        ];
-
-        # You can also set environment variables if needed
-        # shellHook = ''
-        #   export JAVA_HOME="${pkgs.jdk21}"
-        # '';
-      };
-    };
-}
-```
-
-**Customization:**
-
-*   **JDK Version:** You can change `pkgs.jdk21` to other available versions like `pkgs.jdk17`, `pkgs.jdk`, etc.
-*   **Build Tools:** Uncomment or add other build tools like `pkgs.maven` or `pkgs.gradle` to the `buildInputs` list as needed.
-
-### 3. Allow `direnv`
-
-After creating or modifying the `.envrc` file, you need to grant `direnv` permission to load it. Run the following command in your project directory:
+After the script runs, you must grant `direnv` permission to load the new configuration. Run the following command:
 
 ```sh
 direnv allow
 ```
 
-`direnv` will now parse the `flake.nix` file and make the specified JDK and any other tools available in your shell.
+`direnv` will now build the environment defined in `flake.nix`, making the specified JDK available in your shell.
 
-### 4. Verify the Setup
+### 3. Verify the Setup
 
 Once `direnv` loads the environment, you can verify that the correct Java version is active:
 
@@ -80,4 +40,19 @@ Once `direnv` loads the environment, you can verify that the correct Java versio
 java -version
 ```
 
-This should display the version of the JDK you specified in your `flake.nix`. You have now successfully configured a per-project JDK environment!
+This should display the version of the JDK you specified.
+
+### 4. Customization (Optional)
+
+If you need to add more development tools like Maven or Gradle, you can edit the generated `flake.nix` file and add them to the `buildInputs` list. For example:
+
+```nix
+# ...
+buildInputs = [
+  pkgs.jdk21
+  pkgs.maven
+];
+# ...
+```
+
+After saving your changes to `flake.nix`, `direnv` will automatically detect the change and reload the environment.

@@ -12,6 +12,9 @@
     # Direnv and Nix Direnv for environment management
     direnv
     nix-direnv
+
+    # Script to set up a JDK environment for a project
+    (pkgs.writeShellScriptBin "setup-jdk-env" (builtins.readFile ./scripts/setup_jdk_env.sh))
   ];
 
   programs.direnv = {
