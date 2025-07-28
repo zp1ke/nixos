@@ -12,7 +12,6 @@ if [ -z "$1" ]; then
 fi
 
 JDK_VERSION_NUMBER=$1
-JDK_PACKAGE="jdk\${JDK_VERSION_NUMBER}"
 
 # --- Create flake.nix ---
 cat > flake.nix <<EOF
@@ -32,7 +31,7 @@ cat > flake.nix <<EOF
       devShells.\${system}.default = pkgs.mkShell {
         buildInputs = [
           # Use the specified JDK version
-          pkgs.${JDK_PACKAGE}
+          pkgs.jdk${JDK_VERSION_NUMBER}
 
           # You can add other tools like Maven or Gradle here by editing this file
           # pkgs.maven
