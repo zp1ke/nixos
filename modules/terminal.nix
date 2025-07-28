@@ -100,4 +100,14 @@
       };
     };
   };
+
+  # Default Konsole profile
+  home.file.".local/share/konsole/Default.profile" = {
+    force = false;
+    text = ''
+      [General]
+      Name=Default
+      Parent=FALLBACK/
+    '';
+  };
 }

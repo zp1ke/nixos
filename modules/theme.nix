@@ -5,6 +5,7 @@
   home.packages = with pkgs; [
     kdePackages.breeze
     kdePackages.plasma-desktop
+    kconfig
 
     (writeShellScriptBin "theme-light"
       (builtins.replaceStrings
