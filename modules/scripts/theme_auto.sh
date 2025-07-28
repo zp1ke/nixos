@@ -4,11 +4,18 @@
 current_hour=$(date +%H)
 
 # Define theme hours (adjustable)
-LIGHT_START=6   # 6:00 AM
-DARK_START=18   # 6:00 PM
+LIGHT_START_HOUR=6
+LIGHT_START_MIN=30
+DARK_START_HOUR=18
+DARK_START_MIN=30
+
+current_hour=$(date +%H)
+current_min=$(date +%M)
 
 # Apply appropriate theme based on current time
-if [ $current_hour -ge $LIGHT_START ] && [ $current_hour -lt $DARK_START ]; then
+if { [ "$current_hour" -gt "$LIGHT_START_HOUR" ] || { [ "$current_hour" -eq "$LIGHT_START_HOUR" ] && [ "$current_min" -ge "$LIGHT_START_MIN" ]; }; } && \
+   { [ "$current_hour" -lt "$DARK_START_HOUR" ] || { [ "$current_hour" -eq "$DARK_START_HOUR" ] && [ "$current_min" -lt "$DARK_START_MIN" ]; }; }
+then
     echo "Setting light theme (current time: $(date +%H:%M))"
     theme-light
 else
