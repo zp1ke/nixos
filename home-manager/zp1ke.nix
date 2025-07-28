@@ -3,13 +3,14 @@
 # https://nix-community.github.io/home-manager/options.xhtml
 {
   imports = [
-    (inputs.self + "/modules/theme.nix")
     (inputs.self + "/modules/terminal.nix")
     (inputs.self + "/modules/ssh.nix")
     (inputs.self + "/modules/git.nix")
     (inputs.self + "/modules/network.nix")
     (inputs.self + "/modules/cloud.nix")
     (inputs.self + "/modules/development.nix")
+    (inputs.self + "/modules/theme.nix")
+    (inputs.self + "/modules/wallpaper.nix")
   ];
 
   home.username = "zp1ke";
