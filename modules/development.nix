@@ -1,6 +1,10 @@
 { config, pkgs, inputs, ... }:
 
 {
+  imports = [
+    (inputs.home-manager + "/modules/programs/flutter.nix")
+  ];
+
   home.packages = with pkgs; [
     # Docker and Docker Compose command-line tools.
     # The Docker daemon must be enabled in your system-level NixOS configuration for Docker to function.
