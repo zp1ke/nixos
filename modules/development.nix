@@ -14,7 +14,10 @@
     nix-direnv
 
     # Script to set up a JDK environment for a project
-    (pkgs.writeShellScriptBin "setup-jdk-env" (builtins.readFile ./scripts/setup_jdk_env.sh))
+    (pkgs.writeShellScriptBin "setup-jdk-env" (builtins.readFile ./scripts/setup_jdk_env.sh)),
+
+    # Script to set up a NodeJS environment for a project
+    (pkgs.writeShellScriptBin "setup-nodejs-env" (builtins.readFile ./scripts/setup_nodejs_env.sh))
   ];
 
   programs.direnv = {

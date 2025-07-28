@@ -33,6 +33,7 @@ Personal NixOS configuration using flakes and Home Manager.
 │   ├── setup.md                       # Installation guide
 │   ├── setup-development.md           # Development environment setup guide
 │   ├── setup-wallpaper.md             # Dynamic wallpaper setup guide
+│   ├── setup-nodejs.md                # NodeJS development setup guide
 │   ├── setup-git.md                   # Git & SSH setup guide
 │   ├── setup-network.md               # Network & VPN setup guide
 │   └── setup-cloud.md                 # Cloud storage setup guide
@@ -57,7 +58,8 @@ Personal NixOS configuration using flakes and Home Manager.
 │       ├── vpn_*.sh                   # VPN management scripts
 │       ├── onedrive_*.sh              # OneDrive management scripts
 │       ├── theme_*.sh                 # Theme management scripts
-│       └── wallpaper_apply.sh         # Wallpaper management script
+│       ├── wallpaper_apply.sh         # Wallpaper management script
+│       └── setup_nodejs_env.sh        # NodeJS environment setup script
 ├── overlays/                          # Nix package overlays
 └── secrets/                           # Secrets (gitignored)
 ```
