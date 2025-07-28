@@ -9,15 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    yin-yang = {
-      url = "github:oskarsh/Yin-Yang";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, yin-yang, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }@inputs:
     let
       system = "x86_64-linux";
       hostname = "legion";

@@ -1,36 +1,71 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
-  imports = [ inputs.yin-yang.homeManagerModules.yin-yang ];
+  # Create scripts for theme switching
+  home.packages = with pkgs; [
+    kdePackages.breeze
 
-  # Yin-Yang: Automatic Light/Dark Theme Switching
-  services.yin-yang = {
-    enable = true;
-    # Set the times for light and dark modes.
-    # You can also use latitude and longitude for sunrise/sunset.
-    settings = {
-      followSun = false; # To use sunrise/sunset
-      # latitude = 40.71;  # Example: New York City
-      # longitude = -74.00; # Example: New York City
+    # Theme switching scripts from external files
+    (writeShellScriptBin "theme-light"
+      (builtins.replaceStrings
+        ["$\{PLASMA_WORKSPACE}"]
+        ["${pkgs.kdePackages.plasma-workspace}"]
+        (builtins.readFile ./scripts/theme_light.sh)))
 
-      # If not following sun, use these fixed times
-      times = [ "06:30" "18:30" ];
+    (writeShellScriptBin "theme-dark"
+      (builtins.replaceStrings
+        ["$\{PLASMA_WORKSPACE}"]
+        ["${pkgs.kdePackages.plasma-workspace}"]
+        (builtins.readFile ./scripts/theme_dark.sh)))
 
-      # Specify which themes to use
-      themes = {
-        # KDE Plasma Global Theme
-        plasma = [ "Breeze" "Breeze-Dark" ];
-        # GTK Theme (for apps like GIMP, Inkscape)
-        gtk = [ "Breeze" "Breeze-Dark" ];
-        # VS Code Theme
-        code = [ "Default Light+" "Default Dark+" ];
-        # Konsole Color Scheme
-        konsole = [ "WhiteOnBlack" "Breeze" ];
-      };
+    (writeShellScriptBin "theme-auto" (builtins.readFile ./scripts/theme_auto.sh))
+  ];
+
+  # Create systemd user timers for automatic switching
+  systemd.user.services.theme-light = {
+    Unit.Description = "Switch to light theme";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${config.home.homeDirectory}/.nix-profile/bin/theme-light";
     };
   };
 
-  home.packages = with pkgs; [
-    kdePackages.breeze
-  ];
+  systemd.user.timers.theme-light = {
+    Unit.Description = "Timer for light theme";
+    Timer = {
+      OnCalendar = "*-*-* 06:30:00";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  systemd.user.services.theme-dark = {
+    Unit.Description = "Switch to dark theme";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${config.home.homeDirectory}/.nix-profile/bin/theme-dark";
+    };
+  };
+
+  systemd.user.timers.theme-dark = {
+    Unit.Description = "Timer for dark theme";
+    Timer = {
+      OnCalendar = "*-*-* 18:30:00";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  # Service to apply correct theme at login
+  systemd.user.services.theme-auto = {
+    Unit = {
+      Description = "Apply correct theme based on time of day";
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${config.home.homeDirectory}/.nix-profile/bin/theme-auto";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 }
