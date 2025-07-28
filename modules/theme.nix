@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nur-comfy, ... }:
 
 {
+  imports = [ nur-comfy.homeManagerModules.default ];
+
   # Yin-Yang: Automatic Light/Dark Theme Switching
   services.yin-yang = {
     enable = true;
@@ -30,8 +32,5 @@
 
   home.packages = with pkgs; [
     kdePackages.breeze
-    (kdePackages.plasma-themes.override {
-      # Add any custom themes here if you use them
-    })
   ];
 }
