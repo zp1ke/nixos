@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 # https://nix-community.github.io/home-manager/options.xhtml
 {

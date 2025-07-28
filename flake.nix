@@ -9,15 +9,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur-comfy = {
-      url = "github:gvolpe/nur-comfy";
+    yin-yang = {
+      url = "github:oskarsh/Yin-Yang";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nur-comfy, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, yin-yang, ... }@inputs:
     let
       system = "x86_64-linux";
       hostname = "legion";
@@ -47,7 +47,6 @@
             home-manager.users."${username}" = import ./home-manager/${username}.nix;
             home-manager.extraSpecialArgs = {
               inherit inputs;
-              nur-comfy = nur-comfy.packages.${system};
             };
           }
         ];

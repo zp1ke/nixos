@@ -1,7 +1,7 @@
-{ config, pkgs, nur-comfy, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  imports = [ nur-comfy.homeManagerModules.default ];
+  imports = [ inputs.yin-yang.homeManagerModules.yin-yang ];
 
   # Yin-Yang: Automatic Light/Dark Theme Switching
   services.yin-yang = {
