@@ -3,6 +3,7 @@
 # https://nix-community.github.io/home-manager/options.xhtml
 {
   imports = [
+    ../modules/theme.nix
     ../modules/terminal.nix
     ../modules/ssh.nix
     ../modules/git.nix
