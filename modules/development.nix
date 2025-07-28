@@ -1,10 +1,6 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [
-    (inputs.home-manager + "/modules/programs/flutter.nix")
-  ];
-
   home.packages = with pkgs; [
     # Docker and Docker Compose command-line tools.
     # The Docker daemon must be enabled in your system-level NixOS configuration for Docker to function.
@@ -12,6 +8,7 @@
     docker-compose
 
     android-studio
+    android-tools
     dbeaver-bin
     flutter
     github-desktop
@@ -32,6 +29,31 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  # Enable ADB for Android development
+  programs.adb.enable = true;
+
+  # Environment variables for Android SDK
+  home.sessionVariables = {
+    ANDROID_HOME = "${config.home.homeDirectory}/Android/Sdk";
+    ANDROID_SDK_ROOT = "${config.home.homeDirectory}/Android/Sdk";
+    FLUTTER_ROOT = "${pkgs.flutter}";
+  };
+
+  # Add Android SDK tools to PATH
+  home.sessionPath = [
+    "$ANDROID_HOME/emulator"
+    "$ANDROID_HOME/platform-tools"
+    "$ANDROID_HOME/tools"
+    "$ANDROID_HOME/tools/bin"
+  ];
+
+  # Create Android SDK directory
+  home.activation = {
+    createAndroidSdkDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      mkdir -p $HOME/Android/Sdk
+    '';
   };
 
   # Flutter configuration

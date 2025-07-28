@@ -74,7 +74,7 @@
   users.users.zp1ke = {
     isNormalUser = true;
     description = "Matt Atcher";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "adbusers" ];
     shell = pkgs.zsh;
   };
 
