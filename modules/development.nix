@@ -7,6 +7,11 @@
     docker
     docker-compose
 
+    android-studio
+    dbeaver-bin
+    flutter
+    github-desktop
+    jetbrains.idea-community
     vscode
 
     # Direnv and Nix Direnv for environment management
@@ -23,5 +28,13 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  # Flutter configuration
+  programs.flutter = {
+    enable = true;
+    platform = "android";
+    channel = "stable";
+    dart-sdk = pkgs.dart;
   };
 }
