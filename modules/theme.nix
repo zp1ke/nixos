@@ -4,18 +4,18 @@
   # Create scripts for theme switching
   home.packages = with pkgs; [
     kdePackages.breeze
+    kdePackages.plasma-desktop
 
-    # Theme switching scripts from external files
     (writeShellScriptBin "theme-light"
       (builtins.replaceStrings
-        ["$\{PLASMA_WORKSPACE}"]
-        ["${pkgs.kdePackages.plasma-workspace}"]
+        ["$\{PLASMA_WORKSPACE}" "$\{PLASMA_DESKTOP}"]
+        ["${pkgs.kdePackages.plasma-workspace}" "${pkgs.kdePackages.plasma-desktop}"]
         (builtins.readFile ./scripts/theme_light.sh)))
 
     (writeShellScriptBin "theme-dark"
       (builtins.replaceStrings
-        ["$\{PLASMA_WORKSPACE}"]
-        ["${pkgs.kdePackages.plasma-workspace}"]
+        ["$\{PLASMA_WORKSPACE}" "$\{PLASMA_DESKTOP}"]
+        ["${pkgs.kdePackages.plasma-workspace}" "${pkgs.kdePackages.plasma-desktop}"]
         (builtins.readFile ./scripts/theme_dark.sh)))
 
     (writeShellScriptBin "theme-auto" (builtins.readFile ./scripts/theme_auto.sh))
