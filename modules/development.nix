@@ -9,8 +9,6 @@
 
     dbeaver-bin
     github-desktop
-    jetbrains.idea-community-bin
-    jetbrains.jdk-no-jcef
     vscode
 
     # Direnv and Nix Direnv for environment management
@@ -25,6 +23,12 @@
 
     # Script to set up a Flutter environment for a project
     (pkgs.writeShellScriptBin "setup-flutter-env" (builtins.readFile ./scripts/setup_flutter_env.sh))
+
+    (pkgs.buildFHSUserEnv {
+      name = "idea-community-fhs";
+      targetPkgs = pkgs: [ pkgs.jetbrains.idea-community-bin pkgs.jdk21 ];
+      runScript = "idea-community";
+    })
   ];
 
   programs.direnv = {
