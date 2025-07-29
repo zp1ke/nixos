@@ -10,56 +10,33 @@ cat > flake.nix <<EOF
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    android-nixpkgs.url = "github:tadfisher/android-nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          config = {
-            android_sdk.accept_license = true;
-            allowUnfree = true;
-          };
-        };
+  outputs = { self, nixpkgs, android-nixpkgs }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.\${system};
+    in
+    {
+      devShells.\${system}.default = pkgs.mkShell {
+        buildInputs = [
+          firebase-tools
+          flutter
+        ];
+      };
 
-        androidComposition = pkgs.androidenv.composeAndroidPackages {
-          includeEmulator = false;
-          includeSources = false;
-          extraLicenses = [
-            "android-googletv-license"
-            "android-sdk-arm-dbt-license"
-            "android-sdk-license"
-            "android-sdk-preview-license"
-            "google-gdk-license"
-            "intel-android-extra-license"
-            "intel-android-sysimage-license"
-            "mips-android-sysimage-license"
-          ];
-        };
-        androidSdk = androidComposition.androidsdk;
-      in
-      {
-        devShell = with pkgs; mkShell rec {
-          ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
-          ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
-
-          buildInputs = [
-            androidSdk
-            firebase-tools
-            flutter
-            jdk17
-            pkgs.mesa
-            pkgs.libigl
-          ];
-        };
-      }
-    );
+      packages.x86_64-linux.android-sdk = android-nixpkgs.\${system} (sdkPkgs: with sdkPkgs; [
+        cmdline-tools-latest
+        build-tools-34-0-0
+        platform-tools
+        platforms-android-34
+      ]);
+    };
 }
 EOF
 
-echo "✅ Created flake.nix for Flutter with build tools v${BUILD_TOOLS_VERSION}."
+echo "✅ Created flake.nix for Flutter with android SDK."
 
 # --- Create .envrc ---
 cat > .envrc <<EOF
