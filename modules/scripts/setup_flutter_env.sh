@@ -17,7 +17,7 @@ PLATFORM_VERSION=$(echo "$BUILD_TOOLS_VERSION" | cut -d'.' -f1)
 # --- Create flake.nix ---
 cat > flake.nix <<EOF
 {
-  description = "A Flutter development environment";
+  description = "Flutter development environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -27,39 +27,37 @@ cat > flake.nix <<EOF
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = nixpkgs.legacyPackages.\${system};
-
-        # Declaratively compose the exact Android SDK needed for this project.
-        androidSdk = pkgs.androidenv.composeAndroidPackages {
-          platform-tools = true;
-          cmdline-tools = true;
-          build-tools-version = "${BUILD_TOOLS_VERSION}";
-          platforms-version = "${PLATFORM_VERSION}";
-          # Add other components like 'emulator' or 'system-images' here if needed.
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            android_sdk.accept_license = true;
+            allowUnfree = true;
+          };
         };
+
+        buildToolsVersion = "${BUILD_TOOLS_VERSION}";
+        androidComposition = pkgs.androidenv.composeAndroidPackages {
+          buildToolsVersions = [ buildToolsVersion ];
+          platformVersions = [ "${PLATFORM_VERSION}" ];
+          abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
+        };
+        androidSdk = androidComposition.androidsdk;
       in
       {
-        devShell = pkgs.mkShell {
+        devShell = with pkgs; mkShell rec {
+          ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
           buildInputs = [
-            pkgs.flutter
-            pkgs.jdk17 # Adjust JDK version as needed
+            flutter
             androidSdk
+            jdk17
           ];
-
-          # Set the required environment variables within the shell.
-          shellHook = ''
-            export ANDROID_SDK_ROOT="\${androidSdk}/share/android-sdk"
-            export ANDROID_HOME="\${androidSdk}/share/android-sdk" # Deprecated, but some tools might still use it.
-            echo "Flutter environment loaded."
-            echo "Run 'flutter doctor' to verify."
-          '';
         };
       }
     );
 }
 EOF
 
-echo "✅ Created flake.nix for Flutter with build tools v\${BUILD_TOOLS_VERSION}."
+echo "✅ Created flake.nix for Flutter with build tools v${BUILD_TOOLS_VERSION}."
 
 # --- Create .envrc ---
 cat > .envrc <<EOF
