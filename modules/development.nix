@@ -11,6 +11,7 @@
     firebase-tools
     flutter
     github-desktop
+    jdk21
     vscode
 
     # Direnv and Nix Direnv for environment management
