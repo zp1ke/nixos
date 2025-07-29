@@ -10,7 +10,6 @@
     android-studio
     dbeaver-bin
     github-desktop
-    jetbrains.idea-community
     vscode
 
     # Direnv and Nix Direnv for environment management
