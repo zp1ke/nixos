@@ -11,7 +11,7 @@ if [ -z "$1" ]; then
 fi
 
 BUILD_TOOLS_VERSION=$1
-# We can derive a reasonable platform version from the build tools major version.
+CMD_LINE_TOOLS_VERSION="latest"
 PLATFORM_VERSION=$(echo "$BUILD_TOOLS_VERSION" | cut -d'.' -f1)
 
 # --- Create flake.nix ---
@@ -37,9 +37,11 @@ cat > flake.nix <<EOF
 
         buildToolsVersion = "${BUILD_TOOLS_VERSION}";
         androidComposition = pkgs.androidenv.composeAndroidPackages {
+          cmdLineToolsVersion = "${CMD_LINE_TOOLS_VERSION}";
           buildToolsVersions = [ buildToolsVersion ];
           platformVersions = [ "${PLATFORM_VERSION}" ];
           abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
+          includeEmulator = false;
         };
         androidSdk = androidComposition.androidsdk;
       in
