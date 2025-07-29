@@ -56,30 +56,27 @@ cat > flake.nix <<EOF
         androidSdk = androidComposition.androidsdk;
       in
       {
-        devShell = with pkgs; mkShell {
+        devShell = with pkgs; mkShell rec {
+          ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
+          ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
+          FLUTTER_ROOT = "${flutter}/libexec/flutter";
+          JAVA_HOME = "${jdk17}/libexec/openjdk";
+
           buildInputs = [
             androidSdk
             firebase-tools
             flutter
             jdk17
-            mesa
-            libigl
+            pkgs.mesa
+            pkgs.libigl
           ];
-
-          shellHook = ''
-            export ANDROID_SDK_ROOT="${androidSdk}/libexec/android-sdk"
-            export ANDROID_HOME="${androidSdk}/libexec/android-sdk" # Deprecated, but good for compatibility
-            export JAVA_HOME="${jdk17}"
-            export PATH="${androidSdk}/libexec/android-sdk/platform-tools:${androidSdk}/libexec/android-sdk/cmdline-tools/latest/bin:$PATH:$HOME/.pub-cache/bin:$PATH"
-            echo "✅ Flutter environment loaded."
-          '';
         };
       }
     );
 }
 EOF
 
-echo "✅ Created flake.nix for Flutter with build tools ${BUILD_TOOLS_VERSION}."
+echo "✅ Created flake.nix for Flutter with build tools v${BUILD_TOOLS_VERSION}."
 
 # --- Create .envrc ---
 cat > .envrc <<EOF
