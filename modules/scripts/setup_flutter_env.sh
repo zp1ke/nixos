@@ -59,8 +59,6 @@ cat > flake.nix <<EOF
         devShell = with pkgs; mkShell rec {
           ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
           ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
-          FLUTTER_ROOT = "${flutter}/libexec/flutter";
-          JAVA_HOME = "${jdk17}/libexec/openjdk";
 
           buildInputs = [
             androidSdk
