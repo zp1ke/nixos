@@ -70,11 +70,8 @@ cat > flake.nix <<EOF
             export ANDROID_SDK_ROOT="${androidSdk}/libexec/android-sdk"
             export ANDROID_HOME="${androidSdk}/libexec/android-sdk" # Deprecated, but good for compatibility
             export JAVA_HOME="${jdk17}"
-            export PATH="${androidSdk}/libexec/android-sdk/platform-tools:$PATH"
-            export PATH="${androidSdk}/libexec/android-sdk/cmdline-tools/latest/bin:$PATH"
-            export PATH="${androidSdk}/libexec/android-sdk/emulator:$PATH"
-            export PATH="$HOME/.pub-cache/bin:$PATH"
-            echo "Flutter environment loaded."
+            export PATH="${androidSdk}/libexec/android-sdk/platform-tools:${androidSdk}/libexec/android-sdk/cmdline-tools/latest/bin:$PATH:$HOME/.pub-cache/bin:$PATH"
+            echo "✅ Flutter environment loaded."
           '';
         };
       }
