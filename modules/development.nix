@@ -10,8 +10,8 @@
     dbeaver-bin
     github-desktop
     jdk21
-    jetbrains-jdk-jcef
     jetbrains.idea-community-bin
+    jetbrains.jdk-no-jcef
     vscode
 
     # Direnv and Nix Direnv for environment management
