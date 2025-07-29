@@ -3,17 +3,6 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-# Check if build tools version is provided
-if [ -z "$1" ]; then
-  echo "Usage: $0 <build_tools_version>"
-  echo "Example: $0 34.0.0"
-  exit 1
-fi
-
-BUILD_TOOLS_VERSION=$1
-CMD_LINE_TOOLS_VERSION="latest"
-PLATFORM_VERSION=$(echo "$BUILD_TOOLS_VERSION" | cut -d'.' -f1)
-
 # --- Create flake.nix ---
 cat > flake.nix <<EOF
 {
@@ -36,10 +25,6 @@ cat > flake.nix <<EOF
         };
 
         androidComposition = pkgs.androidenv.composeAndroidPackages {
-          cmdLineToolsVersion = "${CMD_LINE_TOOLS_VERSION}";
-          buildToolsVersions = [ "${BUILD_TOOLS_VERSION}" ];
-          platformVersions = [ "${PLATFORM_VERSION}" ];
-          abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
           includeEmulator = false;
           includeSources = false;
           extraLicenses = [
@@ -68,6 +53,10 @@ cat > flake.nix <<EOF
             pkgs.mesa
             pkgs.libigl
           ];
+
+          shellHook = ''
+            export PATH="$(echo "$ANDROID_HOME/cmake/${cmakeVersion}".*/bin):$PATH"
+          '';
         };
       }
     );
