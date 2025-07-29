@@ -10,6 +10,7 @@
     dbeaver-bin
     github-desktop
     jdk21
+    jetbrains-jdk-jcef
     jetbrains.idea-community-bin
     vscode
 
