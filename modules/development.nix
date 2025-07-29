@@ -23,12 +23,6 @@
 
     # Script to set up a Flutter environment for a project
     (pkgs.writeShellScriptBin "setup-flutter-env" (builtins.readFile ./scripts/setup_flutter_env.sh))
-
-    (pkgs.buildFHSEnv {
-      name = "idea-community-fhs";
-      targetPkgs = pkgs: [ pkgs.jetbrains.idea-community pkgs.jdk21 ];
-      runScript = "idea-community";
-    })
   ];
 
   programs.direnv = {
