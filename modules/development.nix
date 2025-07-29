@@ -26,7 +26,7 @@
 
     (pkgs.buildFHSEnv {
       name = "idea-community-fhs";
-      targetPkgs = pkgs: [ pkgs.jetbrains.idea-community-bin pkgs.jdk21 ];
+      targetPkgs = pkgs: [ pkgs.jetbrains.idea-community pkgs.jdk21 ];
       runScript = "idea-community";
     })
   ];
