@@ -10,6 +10,8 @@
     android-studio
     dbeaver-bin
     github-desktop
+    jdk21
+    jetbrains.idea-community-bin
     vscode
 
     # Direnv and Nix Direnv for environment management
