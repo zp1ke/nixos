@@ -53,8 +53,8 @@ cat > flake.nix <<EOF
             androidSdk
             flutter
             jdk17
-            pkgs.mesa.drivers
-            pkgs.libgl
+            pkgs.mesa
+            pkgs.libigl
           ];
         };
       }
