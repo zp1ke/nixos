@@ -48,10 +48,13 @@ cat > flake.nix <<EOF
       {
         devShell = with pkgs; mkShell rec {
           ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
+          ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
           buildInputs = [
-            flutter
             androidSdk
+            flutter
             jdk17
+            pkgs.mesa.drivers
+            pkgs.libgl
           ];
         };
       }
