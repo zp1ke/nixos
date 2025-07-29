@@ -53,10 +53,6 @@ cat > flake.nix <<EOF
             pkgs.mesa
             pkgs.libigl
           ];
-
-          shellHook = ''
-            export PATH="$(echo "$ANDROID_HOME/cmake/${cmakeVersion}".*/bin):$PATH"
-          '';
         };
       }
     );
