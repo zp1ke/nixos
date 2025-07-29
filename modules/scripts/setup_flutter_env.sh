@@ -21,8 +21,8 @@ cat > flake.nix <<EOF
     {
       devShells.\${system}.default = pkgs.mkShell {
         buildInputs = [
-          firebase-tools
-          flutter
+          pkgs.firebase-tools
+          pkgs.flutter
         ];
       };
 
