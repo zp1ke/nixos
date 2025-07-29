@@ -12,6 +12,7 @@
     flutter
     github-desktop
     jdk21
+    jetbrains.idea-community
     vscode
 
     # Direnv and Nix Direnv for environment management
