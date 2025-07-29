@@ -35,34 +35,54 @@ cat > flake.nix <<EOF
           };
         };
 
-        buildToolsVersion = "${BUILD_TOOLS_VERSION}";
         androidComposition = pkgs.androidenv.composeAndroidPackages {
           cmdLineToolsVersion = "${CMD_LINE_TOOLS_VERSION}";
-          buildToolsVersions = [ buildToolsVersion ];
+          buildToolsVersions = [ "${BUILD_TOOLS_VERSION}" ];
           platformVersions = [ "${PLATFORM_VERSION}" ];
           abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
           includeEmulator = false;
+          includeSources = false;
+          extraLicenses = [
+            "android-googletv-license"
+            "android-sdk-arm-dbt-license"
+            "android-sdk-license"
+            "android-sdk-preview-license"
+            "google-gdk-license"
+            "intel-android-extra-license"
+            "intel-android-sysimage-license"
+            "mips-android-sysimage-license"
+          ];
         };
         androidSdk = androidComposition.androidsdk;
       in
       {
-        devShell = with pkgs; mkShell rec {
-          ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
-          ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
+        devShell = with pkgs; mkShell {
           buildInputs = [
             androidSdk
+            firebase-tools
             flutter
             jdk17
-            pkgs.mesa
-            pkgs.libigl
+            mesa
+            libigl
           ];
+
+          shellHook = ''
+            export ANDROID_SDK_ROOT="${androidSdk}/libexec/android-sdk"
+            export ANDROID_HOME="${androidSdk}/libexec/android-sdk" # Deprecated, but good for compatibility
+            export JAVA_HOME="${jdk17}"
+            export PATH="${androidSdk}/libexec/android-sdk/platform-tools:$PATH"
+            export PATH="${androidSdk}/libexec/android-sdk/cmdline-tools/latest/bin:$PATH"
+            export PATH="${androidSdk}/libexec/android-sdk/emulator:$PATH"
+            export PATH="$HOME/.pub-cache/bin:$PATH"
+            echo "Flutter environment loaded."
+          '';
         };
       }
     );
 }
 EOF
 
-echo "✅ Created flake.nix for Flutter with build tools v${BUILD_TOOLS_VERSION}."
+echo "✅ Created flake.nix for Flutter with build tools ${BUILD_TOOLS_VERSION}."
 
 # --- Create .envrc ---
 cat > .envrc <<EOF
