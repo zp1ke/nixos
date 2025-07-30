@@ -8,6 +8,8 @@
     ripgrep
   ];
 
+  programs.gpg.enable = true;
+
   # Zsh configuration
   programs.zsh = {
     enable = true;
@@ -83,10 +85,10 @@
       add_newline = true;
       format = "$all$character";
       right_format = "$duration";
-      continuation_prompt = "[┈➤➤](bright-black) ";
+      continuation_prompt = "[┈❯❯](bright-black) ";
       character = {
-        success_symbol = "[┈➤](bold green)";
-        error_symbol = "[┈➤](bold red)";
+        success_symbol = "[┈](bold bright-black)[❯](bold green) ";
+        error_symbol = "[┈](bold bright-black)[❯](bold red) ";
       };
       nix_shell = {
         disabled = false;
