@@ -82,14 +82,14 @@
     settings = {
       add_newline = true;
       format = ''
-        ╭$all
-        ╰$character
+        $all
+        $character
       '';
-      right_format = "$time";
+      right_format = "$duration";
       continuation_prompt = "[┈➤➤](bright-black) ";
       character = {
-        success_symbol = "[┈➤](bold #1c8a1aff)";
-        error_symbol = "[┈➤](bold #942a28ff)";
+        success_symbol = "[┈➤](bold green)";
+        error_symbol = "[┈➤](bold red)";
       };
       nix_shell = {
         disabled = false;
@@ -97,10 +97,10 @@
       };
       git_branch = {
         format = "on [$symbol$branch]($style) ";
-        style = "bold #a818a6ff";
+        style = "bold purple";
       };
       directory = {
-        style = "bold #23b2d6ff";
+        style = "bold blue";
         truncation_length = 3;
         home_symbol = "⌂ ";
       };
