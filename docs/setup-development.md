@@ -110,3 +110,71 @@ buildInputs = [
 ];
 # ...
 ```
+
+---
+
+## Per-Project Flutter Configuration using `setup-flutter-env`
+
+For Flutter projects, the best approach is to create a dedicated development shell using a Nix flake. This ensures that the specific versions of the Flutter SDK, Android SDK, and JDK are managed per-project.
+
+### 1. Run the `setup-flutter-env` Script
+
+Navigate to the root of your Flutter project and run the script, passing the desired Android build tools version as an argument.
+
+For example, to use build tools version `34.0.0`, run:
+
+```sh
+setup-flutter-env 34.0.0
+```
+
+This will generate a `flake.nix` and a `.envrc` file, defining a complete and isolated Flutter development environment with:
+- Flutter SDK
+- Android SDK (with the specified build tools version)
+- JDK 17 (required by Flutter)
+- Graphics drivers (to resolve `eglinfo` warnings)
+
+### 2. Allow `direnv`
+
+As with the other setups, you must allow `direnv` to load the new flake-based environment.
+
+```sh
+direnv allow
+```
+
+`direnv` will now build the shell, which may take some time on the first run as it downloads the specified Android SDK components.
+
+### 3. Verify the Setup
+
+Once the shell is loaded, you can verify the environment and check for any remaining setup tasks.
+
+```sh
+flutter doctor
+```
+
+If prompted, accept the Android licenses:
+
+```sh
+flutter doctor --android-licenses
+```
+
+Your Flutter project now has a fully declarative, reproducible, and isolated development environment.
+
+### 4. Customization (Optional)
+
+You can add other Flutter-related tools to your environment by editing the generated `flake.nix` file and adding them to the `buildInputs` list. For example:
+
+```nix
+# ...
+buildInputs = [
+  androidSdk
+  firebase-tools
+  flutter
+  jdk17
+  mesa.drivers
+  libgl
+  # Add other tools like:
+  # gradle
+  # android-studio
+];
+# ...
+```

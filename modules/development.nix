@@ -8,11 +8,8 @@
     docker-compose
 
     dbeaver-bin
-    firebase-tools
-    flutter
     github-desktop
-    jdk21
-    jetbrains.idea-community
+    # jetbrains.idea-community
     vscode
 
     # Direnv and Nix Direnv for environment management
@@ -24,6 +21,9 @@
 
     # Script to set up a NodeJS environment for a project
     (pkgs.writeShellScriptBin "setup-nodejs-env" (builtins.readFile ./scripts/setup_nodejs_env.sh))
+
+    # Script to set up a Flutter with Android environment for a project
+    (pkgs.writeShellScriptBin "setup-flutter-env" (builtins.readFile ./scripts/setup_flutter_env.sh))
   ];
 
   programs.direnv = {
