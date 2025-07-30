@@ -82,20 +82,22 @@
     settings = {
       add_newline = true;
       format = "$all$character";
+      right_format = "$duration";
+      continuation_prompt = "[╰┈┈➤](bright-black) ";
       character = {
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
+        success_symbol = "[➤](bold #026b00)";
+        error_symbol = "[➤](bold #980200)";
       };
       nix_shell = {
         disabled = false;
-        format = "via [$symbol$state]($style) ";
+        format = "❄︎ [$symbol$state]($style) ";
       };
       git_branch = {
-        format = "on [$symbol$branch]($style) ";
-        style = "bold purple";
+        format = "𖦥 [$symbol$branch]($style) ";
+        style = "bold #a626a4";
       };
       directory = {
-        style = "bold cyan";
+        style = "bold #23b2d6ff";
         truncation_length = 3;
       };
     };
