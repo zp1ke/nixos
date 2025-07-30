@@ -90,20 +90,6 @@
   # Enable SSH
   services.openssh.enable = true;
 
-  # Fonts
-  fonts.packages = with pkgs; [
-    cascadia-code
-    fira-code
-    font-awesome
-    inter
-    jetbrains-mono
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
-    powerline-fonts
-  ];
-  fonts.fontconfig.enable = true;
-
   # Desktop
   services.xserver ={
     enable = true;
