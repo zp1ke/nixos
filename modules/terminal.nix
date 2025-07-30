@@ -81,10 +81,7 @@
     enableZshIntegration = true;
     settings = {
       add_newline = true;
-      format = ''
-        $all
-        $character
-      '';
+      format = "$all$character";
       right_format = "$duration";
       continuation_prompt = "[┈➤➤](bright-black) ";
       character = {
