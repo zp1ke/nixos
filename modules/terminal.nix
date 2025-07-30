@@ -99,7 +99,6 @@
       directory = {
         style = "bold blue";
         truncation_length = 3;
-        home_symbol = "⌂ ";
       };
     };
   };
