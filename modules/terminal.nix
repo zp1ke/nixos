@@ -81,8 +81,8 @@
     enableZshIntegration = true;
     settings = {
       add_newline = true;
-      format = "$directory$character";
-      right_format = "$all";
+      format = "$directory$all";
+      right_format = "$character$git_branch$git_commit$time";
       continuation_prompt = "[╰┈┈➤](bright-black) ";
       character = {
         success_symbol = "[┈➤](bold #1c8a1aff)";
@@ -99,6 +99,7 @@
       directory = {
         style = "bold #23b2d6ff";
         truncation_length = 3;
+        home_symbol = "⌂ ";
       };
     };
   };
