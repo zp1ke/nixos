@@ -81,12 +81,12 @@
     enableZshIntegration = true;
     settings = {
       add_newline = true;
-      format = "$all$character";
-      right_format = "$duration";
+      format = "$directory$character";
+      right_format = "$all";
       continuation_prompt = "[╰┈┈➤](bright-black) ";
       character = {
-        success_symbol = "[➤](bold #026b00)";
-        error_symbol = "[➤](bold #980200)";
+        success_symbol = "[┈➤](bold #1c8a1aff)";
+        error_symbol = "[┈➤](bold #942a28ff)";
       };
       nix_shell = {
         disabled = false;
@@ -94,7 +94,7 @@
       };
       git_branch = {
         format = "on [$symbol$branch]($style) ";
-        style = "bold #a626a4";
+        style = "bold #a818a6ff";
       };
       directory = {
         style = "bold #23b2d6ff";
@@ -110,6 +110,10 @@
       [General]
       Name=Default
       Parent=FALLBACK/
+
+      [Appearance]
+      BoldIntense=false
+      Font=Cascadia Mono,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
     '';
   };
 }
