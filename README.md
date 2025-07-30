@@ -33,7 +33,6 @@ Personal NixOS configuration using flakes and Home Manager.
 │   ├── setup.md                       # Installation guide
 │   ├── setup-development.md           # Development environment setup guide
 │   ├── setup-wallpaper.md             # Dynamic wallpaper setup guide
-│   ├── setup-nodejs.md                # NodeJS development setup guide
 │   ├── setup-git.md                   # Git & SSH setup guide
 │   ├── setup-network.md               # Network & VPN setup guide
 │   └── setup-cloud.md                 # Cloud storage setup guide
@@ -44,14 +43,14 @@ Personal NixOS configuration using flakes and Home Manager.
 │   └── zp1ke.nix                      # User configuration
 ├── modules/
 │   ├── base.nix                       # Shared system modules
+│   ├── cloud.nix                      # Cloud storage configuration
 │   ├── development.nix                # Development tools and environment
 │   ├── git.nix                        # Git configuration
+│   ├── network.nix                    # Network & VPN configuration
 │   ├── ssh.nix                        # SSH configuration
 │   ├── terminal.nix                   # Terminal & Zsh setup
 │   ├── theme.nix                      # Auto theme configuration
 │   ├── wallpaper.nix                  # Dynamic wallpaper configuration
-│   ├── network.nix                    # Network & VPN configuration
-│   ├── cloud.nix                      # Cloud storage configuration
 │   └── scripts/
 │       ├── generate_ssh_key.sh        # SSH key generation
 │       ├── test_ssh_connections.sh    # SSH connection test

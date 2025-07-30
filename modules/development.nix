@@ -7,6 +7,7 @@
     docker
     docker-compose
 
+    android-studio
     dbeaver-bin
     github-desktop
     # jetbrains.idea-community
