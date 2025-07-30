@@ -102,6 +102,7 @@
     noto-fonts-emoji
     powerline-fonts
   ];
+  fonts.fontconfig.enable = true;
 
   # Desktop
   services.xserver ={

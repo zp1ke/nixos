@@ -90,10 +90,10 @@
       };
       nix_shell = {
         disabled = false;
-        format = "❄︎ [$symbol$state]($style) ";
+        format = "via [$symbol$state]($style) ";
       };
       git_branch = {
-        format = "𖦥 [$symbol$branch]($style) ";
+        format = "on [$symbol$branch]($style) ";
         style = "bold #a626a4";
       };
       directory = {
