@@ -90,6 +90,19 @@
   # Enable SSH
   services.openssh.enable = true;
 
+  # Fonts
+  fonts.packages = with pkgs; [
+    cascadia-code
+    fira-code
+    font-awesome
+    inter
+    jetbrains-mono
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    powerline-fonts
+  ];
+
   # Desktop
   services.xserver ={
     enable = true;
@@ -99,6 +112,7 @@
     };
   };
   services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   # System version
