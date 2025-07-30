@@ -81,9 +81,12 @@
     enableZshIntegration = true;
     settings = {
       add_newline = true;
-      format = "$directory$all";
-      right_format = "$character$git_branch$git_commit$time";
-      continuation_prompt = "[╰┈┈➤](bright-black) ";
+      format = ''
+        ╭$all
+        ╰$character
+      '';
+      right_format = "$time";
+      continuation_prompt = "[┈➤➤](bright-black) ";
       character = {
         success_symbol = "[┈➤](bold #1c8a1aff)";
         error_symbol = "[┈➤](bold #942a28ff)";
