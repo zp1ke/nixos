@@ -58,7 +58,9 @@ Personal NixOS configuration using flakes and Home Manager.
 │       ├── onedrive_*.sh              # OneDrive management scripts
 │       ├── theme_*.sh                 # Theme management scripts
 │       ├── wallpaper_apply.sh         # Wallpaper management script
-│       └── setup_nodejs_env.sh        # NodeJS environment setup script
+│       ├── setup_jdk_env.sh           # JDK environment setup script
+│       ├── setup_nodejs_env.sh        # NodeJS environment setup script
+│       └── setup_flutter_env.sh       # Flutter environment setup script
 ├── overlays/                          # Nix package overlays
 └── secrets/                           # Secrets (gitignored)
 ```
