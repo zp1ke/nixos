@@ -30,19 +30,18 @@
     };
   };
 
-  # Create a service to run the script on login
+  # Service to apply correct wallpaper at login
   systemd.user.services.wallpaper-apply-on-login = {
+    enable = true;
     Unit = {
-      Description = "Apply wallpaper on login";
-      After = [ "graphical-session.target" ];
+      Description = "Apply wallpaper based on time of day";
+      After = [ "plasma-workspace.target" ];
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${config.home.homeDirectory}/.nix-profile/bin/wallpaper-apply";
+      ExecStart = "${pkgs.writeShellScriptBin "wallpaper-apply" (builtins.readFile ./scripts/wallpaper_apply.sh)}/bin/wallpaper-apply";
     };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
+    Install.WantedBy = [ "plasma-workspace.target" ];
   };
 
   # Create the default wallpaper schedule configuration file
