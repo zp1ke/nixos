@@ -59,14 +59,15 @@
 
   # Service to apply correct theme at login
   systemd.user.services.theme-auto = {
+    enable = true;
     Unit = {
-      Description = "Apply correct theme based on time of day";
-      After = [ "graphical-session.target" ];
+      Description = "Apply theme based on time of day";
+      After = [ "plasma-workspace.target" ];
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${config.home.homeDirectory}/.nix-profile/bin/theme-auto";
+      ExecStart = "${pkgs.writeShellScriptBin "theme-auto" (builtins.readFile ./scripts/theme_auto.sh)}/bin/theme-auto";
     };
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "plasma-workspace.target" ];
   };
 }
